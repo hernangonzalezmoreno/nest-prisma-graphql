@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model actor_episode {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+  actor_id   Int       @db.UnsignedInt
+  episode_id Int       @db.UnsignedInt
+  actors     actors    @relation(fields: [actor_id], references: [id])
+  episodes   episodes  @relation(fields: [episode_id], references: [id])
+
+  @@index([actor_id], name: "actor_episode_actor_id_foreign")
+  @@index([episode_id], name: "actor_episode_episode_id_foreign")
+}
+
+model actor_movie {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+  actor_id   Int       @db.UnsignedInt
+  movie_id   Int       @db.UnsignedInt
+  actors     actors    @relation(fields: [actor_id], references: [id])
+  movies     movies    @relation(fields: [movie_id], references: [id])
+
+  @@index([actor_id], name: "actor_movie_actor_id_foreign")
+  @@index([movie_id], name: "actor_movie_movie_id_foreign")
+}
+
+model actors {
+  id                Int             @id @default(autoincrement()) @db.UnsignedInt
+  created_at        DateTime?       @db.Timestamp(0)
+  updated_at        DateTime?       @db.Timestamp(0)
+  first_name        String          @db.VarChar(100)
+  last_name         String          @db.VarChar(100)
+  rating            Decimal?        @db.Decimal(3, 1)
+  favorite_movie_id Int?            @db.UnsignedInt
+  movies            movies?         @relation(fields: [favorite_movie_id], references: [id])
+  actor_episode     actor_episode[]
+  actor_movie       actor_movie[]
+
+  @@index([favorite_movie_id], name: "actors_favorite_movie_id_foreign")
+}
+
+model episodes {
+  id            Int             @id @default(autoincrement()) @db.UnsignedInt
+  created_at    DateTime?       @db.Timestamp(0)
+  updated_at    DateTime?       @db.Timestamp(0)
+  title         String?         @db.VarChar(500)
+  number        Int?            @db.UnsignedInt
+  release_date  DateTime        @db.DateTime(0)
+  rating        Decimal         @db.Decimal(3, 1)
+  season_id     Int?            @db.UnsignedInt
+  seasons       seasons?        @relation(fields: [season_id], references: [id])
+  actor_episode actor_episode[]
+
+  @@index([season_id], name: "episodes_season_id_foreign")
+}
+
+model genres {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+  name       String    @db.VarChar(100)
+  ranking    Int       @unique @db.UnsignedInt
+  active     Boolean   @default(true)
+  movies     movies[]
+  series     series[]
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement()) @db.UnsignedInt
+  migration String @db.VarChar(255)
+  batch     Int
+}
+
+model movies {
+  id           Int           @id @default(autoincrement()) @db.UnsignedInt
+  created_at   DateTime?     @db.Timestamp(0)
+  updated_at   DateTime?     @db.Timestamp(0)
+  title        String        @db.VarChar(500)
+  rating       Decimal       @db.Decimal(3, 1)
+  awards       Int           @default(0) @db.UnsignedInt
+  release_date DateTime      @db.DateTime(0)
+  length       Int?          @db.UnsignedInt
+  genre_id     Int?          @db.UnsignedInt
+  genres       genres?       @relation(fields: [genre_id], references: [id])
+  actor_movie  actor_movie[]
+  actors       actors[]
+
+  @@index([genre_id], name: "movies_genre_id_foreign")
+}
+
+model password_resets {
+  id         Int       @id @default(autoincrement())
+  email      String    @db.VarChar(255)
+  token      String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+
+  @@index([email], name: "password_resets_email_index")
+  @@index([token], name: "password_resets_token_index")
+}
+
+model seasons {
+  id           Int        @id @default(autoincrement()) @db.UnsignedInt
+  created_at   DateTime?  @db.Timestamp(0)
+  updated_at   DateTime?  @db.Timestamp(0)
+  title        String?    @db.VarChar(500)
+  number       Int?       @db.UnsignedInt
+  release_date DateTime   @db.DateTime(0)
+  end_date     DateTime   @db.DateTime(0)
+  serie_id     Int?       @db.UnsignedInt
+  series       series?    @relation(fields: [serie_id], references: [id])
+  episodes     episodes[]
+
+  @@index([serie_id], name: "seasons_serie_id_foreign")
+}
+
+model series {
+  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  created_at   DateTime? @db.Timestamp(0)
+  updated_at   DateTime? @db.Timestamp(0)
+  title        String    @db.VarChar(500)
+  release_date DateTime  @db.DateTime(0)
+  end_date     DateTime  @db.DateTime(0)
+  genre_id     Int?      @db.UnsignedInt
+  genres       genres?   @relation(fields: [genre_id], references: [id])
+  seasons      seasons[]
+
+  @@index([genre_id], name: "series_genre_id_foreign")
+}
+
+model users {
+  id             Int       @id @default(autoincrement()) @db.UnsignedInt
+  name           String    @db.VarChar(255)
+  email          String    @unique @db.VarChar(255)
+  password       String    @db.VarChar(255)
+  remember_token String?   @db.VarChar(100)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
