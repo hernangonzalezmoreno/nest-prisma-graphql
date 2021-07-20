@@ -14,7 +14,7 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  findAll() {
+  findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 

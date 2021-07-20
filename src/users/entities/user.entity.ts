@@ -15,4 +15,10 @@ export class User {
   @Field({ nullable: true })
   password?: string;
 
+  constructor( id: number, name: string, email: string ){
+    this.id = id;
+    this.name = name;
+    this.email = email;
+  }
+
 }
