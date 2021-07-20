@@ -2,18 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
+import { PrismaService } from 'src/prisma.service';
+// import { users } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
+
+  constructor(private prisma: PrismaService){}
+
   create(createUserInput: CreateUserInput) {
     return 'This action adds a new user';
   }
 
   async findAll(): Promise<User[]> {
-    let users: User[] = [
-      new User( 1, 'Hernan', 'her@gmail.com'),
-      new User( 2, 'Caro', 'caro@gmail.com')
-    ];
+
+    // Usando user.entity
+    let users: User[] = await this.prisma.users.findMany();
+    
+    // Usando users de Prisma
+    // let users: users[] = await this.prisma.users.findMany();
     
     return users;
   }
