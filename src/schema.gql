@@ -3,8 +3,11 @@
 # ------------------------------------------------------
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Id del usuario"""
+  id: Int!
+  name: String!
+  email: String!
+  password: String
 }
 
 type Query {
@@ -19,12 +22,14 @@ type Mutation {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  email: String!
+  password: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  email: String
+  password: String
   id: Int!
 }
