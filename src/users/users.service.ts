@@ -3,15 +3,15 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { PrismaService } from 'src/prisma.service';
-// import { users } from '@prisma/client';
+import { users } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
 
   constructor(private prisma: PrismaService){}
 
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  async create(createUserInput: CreateUserInput): Promise<users> {
+    return await this.prisma.users.create( {data: createUserInput} );
   }
 
   async findAll(): Promise<User[]> {
