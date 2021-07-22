@@ -10,15 +10,35 @@ type User {
   password: String
 }
 
+type Actor {
+  id: Int!
+  first_name: String!
+  last_name: String!
+}
+
+type Movie {
+  id: Int!
+  title: String!
+  rating: Float!
+  awards: Int!
+  length: Int!
+  actors: [Actor!]!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  movies: [Movie!]!
+  movie(id: Int!): Movie!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createMovie(createMovieInput: CreateMovieInput!): Movie!
+  updateMovie(updateMovieInput: UpdateMovieInput!): Movie!
+  removeMovie(id: Int!): Movie!
 }
 
 input CreateUserInput {
@@ -31,5 +51,16 @@ input UpdateUserInput {
   name: String
   email: String
   password: String
+  id: Int!
+}
+
+input CreateMovieInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMovieInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }
