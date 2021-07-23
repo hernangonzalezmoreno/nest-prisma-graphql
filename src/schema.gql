@@ -31,6 +31,12 @@ type Query {
   movie(id: Int!): Movie!
   actors: [Actor!]!
   actor(id: Int!): Actor!
+  findActorByName(findActor: CreateActorInput!): Actor!
+}
+
+input CreateActorInput {
+  first_name: String!
+  last_name: String!
 }
 
 type Mutation {
@@ -71,11 +77,6 @@ input UpdateMovieInput {
   awards: Int
   length: Int
   id: Int!
-}
-
-input CreateActorInput {
-  first_name: String!
-  last_name: String!
 }
 
 input UpdateActorInput {

@@ -22,6 +22,16 @@ export class ActorsService {
     return `This action returns a #${id} actor`;
   }
 
+  async findByFirstAndLastName( createActorInput: CreateActorInput ): Promise<actors>{
+    console.log( createActorInput );
+    return await this.prisma.actors.findFirst({
+      where: {
+        first_name: createActorInput.first_name,
+        last_name: createActorInput.last_name
+      }
+    });
+  }
+
   update(id: number, updateActorInput: UpdateActorInput) {
     return `This action updates a #${id} actor`;
   }

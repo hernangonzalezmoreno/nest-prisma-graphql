@@ -23,6 +23,12 @@ export class ActorsResolver {
     return this.actorsService.findOne(id);
   }
 
+  @Query(() => Actor)
+  findActorByName( @Args('findActor') actor: CreateActorInput ) {
+    console.log( 'q onda' );
+    return this.actorsService.findByFirstAndLastName( actor );
+  }
+
   @Mutation(() => Actor)
   updateActor(@Args('updateActorInput') updateActorInput: UpdateActorInput) {
     return this.actorsService.update(updateActorInput.id, updateActorInput);
