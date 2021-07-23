@@ -85,9 +85,9 @@ model movies {
   created_at   DateTime?     @db.Timestamp(0)
   updated_at   DateTime?     @db.Timestamp(0)
   title        String        @db.VarChar(500)
-  rating       Decimal       @db.Decimal(3, 1)
+  rating       Decimal       @default(1.0) @db.Decimal(3, 1)
   awards       Int           @default(0) @db.UnsignedInt
-  release_date DateTime      @db.DateTime(0)
+  release_date DateTime?     @db.DateTime(0)
   length       Int?          @db.UnsignedInt
   genre_id     Int?          @db.UnsignedInt
   genres       genres?       @relation(fields: [genre_id], references: [id])

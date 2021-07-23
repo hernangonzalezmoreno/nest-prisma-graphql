@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateMovieInput } from './dto/create-movie.input';
+import { CreateActorInput, CreateActors, CreateMovieInput } from './dto/create-movie.input';
 import { UpdateMovieInput } from './dto/update-movie.input';
 import { movies } from '@prisma/client';
+import { ActorsService } from 'src/actors/actors.service';
 
 @Injectable()
 export class MoviesService {
 
-  constructor(private prisma: PrismaService){}
+  constructor(
+    private actorsService: ActorsService,
+    private prisma: PrismaService
+  ){}
 
-  create(createMovieInput: CreateMovieInput) {
-    return 'This action adds a new movie';
+  async create(createMovieInput: CreateMovieInput, createActors: CreateActors): Promise<movies> {
+
+    for( let i =0; i < createActors.actors.length; i++ ){
+      console.log( createActors.actors[i] );
+    }
+
+    return await this.prisma.movies.create( {data: createMovieInput} );
+
   }
 
   async findAll(): Promise<movies[]> {

@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
-import { CreateMovieInput } from './dto/create-movie.input';
+import { CreateActors, CreateMovieInput } from './dto/create-movie.input';
 import { UpdateMovieInput } from './dto/update-movie.input';
 
 @Resolver(() => Movie)
@@ -9,8 +9,13 @@ export class MoviesResolver {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Mutation(() => Movie)
-  createMovie(@Args('createMovieInput') createMovieInput: CreateMovieInput) {
-    return this.moviesService.create(createMovieInput);
+  createMovie(   
+    @Args('createMovieInput') createMovieInput: CreateMovieInput, 
+    @Args('CreateActors') createActors: CreateActors )
+  {
+    console.log( createMovieInput );
+    // return null;
+    return this.moviesService.create(createMovieInput, createActors);
   }
 
   @Query(() => [Movie], { name: 'movies' })

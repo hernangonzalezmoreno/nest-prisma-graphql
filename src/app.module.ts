@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
+import { ActorsService } from './actors/actors.service';
+import { ActorMovieService } from './actor-movie/actor-movie.service';
 
 @Module({
   imports: [
@@ -15,6 +17,6 @@ import { MoviesModule } from './movies/movies.module';
     MoviesModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ActorsService, ActorMovieService],
 })
 export class AppModule {}
