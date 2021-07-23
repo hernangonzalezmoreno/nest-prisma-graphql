@@ -9,8 +9,8 @@ export class MoviesService {
 
   constructor(private prisma: PrismaService){}
 
-  create(createMovieInput: CreateMovieInput) {
-    return 'This action adds a new movie';
+  async create(createMovieInput: CreateMovieInput): Promise<movies> {
+    return await this.prisma.movies.create({ data: createMovieInput });
   }
 
   async findAll(): Promise<movies[]> {

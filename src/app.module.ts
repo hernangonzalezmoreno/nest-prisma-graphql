@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
+import { ActorsModule } from './actors/actors.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { MoviesModule } from './movies/movies.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
     UsersModule,
-    MoviesModule
+    MoviesModule,
+    ActorsModule
   ],
   controllers: [AppController],
   providers: [AppService],
