@@ -19,8 +19,9 @@ type Movie {
 }
 
 type Actor {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  first_name: String!
+  last_name: String!
 }
 
 type Query {
@@ -73,12 +74,12 @@ input UpdateMovieInput {
 }
 
 input CreateActorInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  first_name: String!
+  last_name: String!
 }
 
 input UpdateActorInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  first_name: String
+  last_name: String
   id: Int!
 }
