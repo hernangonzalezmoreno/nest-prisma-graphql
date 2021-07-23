@@ -43,7 +43,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createMovie(createMovieInput: CreateMovieInput!): Movie!
+  createMovie(createActorArray: CreateActorArray!, createMovieInput: CreateMovieInput!): Movie!
   updateMovie(updateMovieInput: UpdateMovieInput!): Movie!
   removeMovie(id: Int!): Movie!
   createActor(createActorInput: CreateActorInput!): Actor!
@@ -62,6 +62,10 @@ input UpdateUserInput {
   email: String
   password: String
   id: Int!
+}
+
+input CreateActorArray {
+  actors: [CreateActorInput!]
 }
 
 input CreateMovieInput {

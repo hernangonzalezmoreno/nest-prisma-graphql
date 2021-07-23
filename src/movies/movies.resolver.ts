@@ -3,14 +3,19 @@ import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
 import { CreateMovieInput } from './dto/create-movie.input';
 import { UpdateMovieInput } from './dto/update-movie.input';
+import { CreateActorArray } from 'src/actors/dto/create-actor-array.input';
+import { CreateActorInput } from 'src/actors/dto/create-actor.input';
 
 @Resolver(() => Movie)
 export class MoviesResolver {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Mutation(() => Movie)
-  createMovie(@Args('createMovieInput') createMovieInput: CreateMovieInput) {
-    return this.moviesService.create(createMovieInput);
+  createMovie(
+    @Args('createMovieInput') createMovieInput: CreateMovieInput,
+    @Args('createActorArray') createActorArray: CreateActorArray
+  ) {
+    return this.moviesService.create( createMovieInput, createActorArray );
   }
 
   @Query(() => [Movie], { name: 'movies' })
