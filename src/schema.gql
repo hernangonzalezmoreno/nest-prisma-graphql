@@ -10,18 +10,19 @@ type User {
   password: String
 }
 
+type Actor {
+  id: Int!
+  first_name: String!
+  last_name: String!
+}
+
 type Movie {
   id: Int!
   title: String!
   rating: Float!
   awards: Int!
   length: Int!
-}
-
-type Actor {
-  id: Int!
-  first_name: String!
-  last_name: String!
+  actors: [Actor!]
 }
 
 type Query {

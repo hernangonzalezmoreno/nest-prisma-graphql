@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
+import { Actor } from 'src/actors/entities/actor.entity';
 
 @ObjectType()
 export class Movie {
@@ -17,5 +18,8 @@ export class Movie {
 
   @Field(() => Int)
   length: number;
+
+  @Field( type => [Actor], {nullable: true} )
+  actors?: Actor[];
 
 }

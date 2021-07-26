@@ -15,20 +15,25 @@ export class ActorsService {
     return await this.prisma.actors.create({ data: createActorInput });
   }
 
-  async addManyActors( createActorArray: CreateActorArray ){
+  async addManyActors( createActorArray: CreateActorArray ): Promise<actors[]>{
 
-    await createActorArray.actors.forEach( async a => {
+    // let newActors: actors[];
+    let newActors: actors[] = new Array();
 
-      let exist = await this.findByFirstAndLastName( a );
-      if( !exist ){
-        this.create( a );
-        console.log( 'Se agrego nuevo actor:', a.first_name, a.last_name );
-      }else{
-        console.log( 'El actor', a.first_name, a.last_name, 'ya existia.' );
+    createActorArray.actors.forEach(async (a) => {
+
+      let exist = await this.findByFirstAndLastName(a);
+      if (!exist) {
+        newActors.push(await this.create(a));
+        console.log('Se agrego nuevo actor:', a.first_name, a.last_name);
+      } else {
+        newActors.push(exist);
+        console.log('El actor', a.first_name, a.last_name, 'ya existia.');
       }
 
     });
 
+    return newActors;
   }
 
   findAll() {
