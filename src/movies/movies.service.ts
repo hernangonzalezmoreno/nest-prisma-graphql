@@ -6,6 +6,7 @@ import { movies, actors } from '@prisma/client';
 import { CreateActorArray } from 'src/actors/dto/create-actor-array.input';
 import { ActorsService } from 'src/actors/actors.service';
 import { ActorMovieService } from 'src/actor-movie/actor-movie.service';
+import { Movie } from './entities/movie.entity';
 
 @Injectable()
 export class MoviesService {
@@ -27,12 +28,26 @@ export class MoviesService {
     return newMovie;
   }
 
-  async findAll(): Promise<movies[]> {
+  async findAll(): Promise<Movie[]> {
 
-    let movies: movies[] = await this.prisma.movies.findMany({
+    let moviesPrisma: any = await this.prisma.movies.findMany({
       include: {
-        actors: true
+        actor_movie: {
+          include: {
+            actors: true
+          }
+        }
       }
+    });
+
+    // moviesPrisma.forEach( m => {
+    //   console.log( m.title, m.actor_movie );
+    // });
+
+    let movies: Movie[] = new Array();
+
+    moviesPrisma.forEach(element => {
+      movies.push( new Movie(element) );
     });
 
     return movies;
