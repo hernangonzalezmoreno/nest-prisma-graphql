@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
 import { ActorsModule } from './actors/actors.module';
+import { ActorMovieModule } from './actor-movie/actor-movie.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { ActorsModule } from './actors/actors.module';
     }),
     UsersModule,
     MoviesModule,
-    ActorsModule
+    ActorsModule,
+    ActorMovieModule
   ],
   controllers: [AppController],
   providers: [AppService],

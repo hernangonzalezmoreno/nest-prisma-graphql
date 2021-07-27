@@ -10,18 +10,19 @@ type User {
   password: String
 }
 
+type Actor {
+  id: Int!
+  first_name: String!
+  last_name: String!
+}
+
 type Movie {
   id: Int!
   title: String!
   rating: Float!
   awards: Int!
   length: Int!
-}
-
-type Actor {
-  id: Int!
-  first_name: String!
-  last_name: String!
+  actors: [Actor!]
 }
 
 type Query {
@@ -31,13 +32,19 @@ type Query {
   movie(id: Int!): Movie!
   actors: [Actor!]!
   actor(id: Int!): Actor!
+  findActorByName(findActor: CreateActorInput!): Actor!
+}
+
+input CreateActorInput {
+  first_name: String!
+  last_name: String!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createMovie(createMovieInput: CreateMovieInput!): Movie!
+  createMovie(createActorArray: CreateActorArray!, createMovieInput: CreateMovieInput!): Movie!
   updateMovie(updateMovieInput: UpdateMovieInput!): Movie!
   removeMovie(id: Int!): Movie!
   createActor(createActorInput: CreateActorInput!): Actor!
@@ -58,6 +65,10 @@ input UpdateUserInput {
   id: Int!
 }
 
+input CreateActorArray {
+  actors: [CreateActorInput!]
+}
+
 input CreateMovieInput {
   title: String!
   rating: Float
@@ -71,11 +82,6 @@ input UpdateMovieInput {
   awards: Int
   length: Int
   id: Int!
-}
-
-input CreateActorInput {
-  first_name: String!
-  last_name: String!
 }
 
 input UpdateActorInput {
