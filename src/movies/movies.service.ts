@@ -53,8 +53,8 @@ export class MoviesService {
     return movies;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} movie`;
+  async findOne(id: number): Promise<movies> {
+    return await this.prisma.movies.findUnique({ where: { id: id } });
   }
 
   update(id: number, updateMovieInput: UpdateMovieInput) {
