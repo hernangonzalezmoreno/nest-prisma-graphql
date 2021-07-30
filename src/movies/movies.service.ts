@@ -53,8 +53,20 @@ export class MoviesService {
     return movies;
   }
 
-  async findOne(id: number): Promise<movies> {
-    return await this.prisma.movies.findUnique({ where: { id: id } });
+  async findOne(id: number): Promise<Movie> {
+
+    let m : movies = await this.prisma.movies.findUnique({ 
+      where: { id: id },
+      include: {
+        actor_movie: {
+          include: {
+            actors: true
+          }
+        }
+      } 
+    });
+
+    return new Movie( m );
   }
 
   update(id: number, updateMovieInput: UpdateMovieInput) {
